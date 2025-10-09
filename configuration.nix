@@ -30,8 +30,17 @@
 
   services.xserver.xkb = {
     layout = "us,ara";
-    variant = "";
     options = "grp:caps_toggle";
+  };
+
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      settings.main = {
+        capslock = "esc";
+        rightcontrol = "capslock";
+      };
+    };
   };
 
   users.users.naif = {
