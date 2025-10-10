@@ -17,6 +17,9 @@ in
     "${mod}+Shift+k" = "move up";
     "${mod}+Shift+l" = "move right";
     "${mod}+c" = "split h";
+    XF86AudioRaiseVolume = "exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ .05+";
+    XF86AudioLowerVolume = "exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ .05-";
+    XF86AudioMute = "exec --no-startup-id wpctl set-mute @DEFAULT_SINK@ toggle";
   };
   modes.resize = {
     j = "resize grow height 10 px or 10 ppt";
