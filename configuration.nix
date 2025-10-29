@@ -74,6 +74,7 @@
     redshift
     unzip
     chromium
+    libreoffice
   ];
 
   fonts.packages = with pkgs; [ noto-fonts ];
