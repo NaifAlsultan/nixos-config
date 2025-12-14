@@ -77,6 +77,7 @@
     unzip
     chromium
     libreoffice
+    kdePackages.kate
   ];
 
   fonts.packages = with pkgs; [ noto-fonts ];
