@@ -9,4 +9,5 @@
     lsp.auto-signature-help = false;
   };
   keys.normal.space.i = ":toggle lsp.display-inlay-hints";
+  keys.normal.space.m = ":toggle inline-diagnostics.cursor-line hint";
 }
