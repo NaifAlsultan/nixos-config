@@ -23,5 +23,7 @@
     modules = import ./dotfiles/i3status-config.nix;
   };
 
+  programs.zathura = import ./dotfiles/zathura-config.nix;
+
   home.stateVersion = "24.11";
 }

@@ -77,6 +77,7 @@
     chromium
     libreoffice
     kdePackages.kate
+    zathura
   ];
 
   fonts.packages = with pkgs; [ noto-fonts ];
