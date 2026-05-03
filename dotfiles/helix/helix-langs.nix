@@ -1,4 +1,10 @@
 {
+  language-server = {
+    harper-ls = {
+      command = "harper-ls";
+      args = [ "--stdio" ];
+    };
+  };
   language = [
     {
       name = "html";
@@ -64,6 +70,7 @@
     }
     {
       name = "markdown";
+      language-servers = [ "harper-ls" ];
       soft-wrap = {
         enable = true;
         wrap-indicator = "";
