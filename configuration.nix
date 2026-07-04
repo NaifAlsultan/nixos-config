@@ -84,6 +84,7 @@
 
   environment.variables = {
     TERMINAL = "alacritty";
+    NIXPKGS_ALLOW_UNFREE = "1";
   };
 
   environment.shellAliases = {
