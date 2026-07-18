@@ -47,6 +47,18 @@
   users.users.naif = {
     isNormalUser = true;
     description = "naif";
+    subUidRanges = [
+      {
+        startUid = 100000;
+        count = 65536;
+      }
+    ];
+    subGidRanges = [
+      {
+        startGid = 100000;
+        count = 65536;
+      }
+    ];
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -56,6 +68,8 @@
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.containers.enable = true;
+  virtualisation.podman.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
