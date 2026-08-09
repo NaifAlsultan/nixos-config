@@ -10,9 +10,15 @@
     languages = import ./dotfiles/helix/helix-langs.nix;
   };
 
-  programs.alacritty = {
+  programs.ghostty = {
     enable = true;
-    settings = import ./dotfiles/alacritty-settings.nix;
+    clearDefaultKeybinds = true;
+    enableBashIntegration = false;
+    enableFishIntegration = false;
+    enableZshIntegration = false;
+    installBatSyntax = false;
+    systemd.enable = false;
+    settings = import ./dotfiles/ghostty-settings.nix;
   };
 
   programs.git = import ./dotfiles/git-config.nix;

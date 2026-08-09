@@ -77,7 +77,7 @@
     helix
     librewolf
     git
-    alacritty
+    ghostty
     i3
     ntfs3g
     keepassxc
@@ -97,7 +97,7 @@
   fonts.packages = with pkgs; [ noto-fonts ];
 
   environment.variables = {
-    TERMINAL = "alacritty";
+    TERMINAL = "ghostty";
     NIXPKGS_ALLOW_UNFREE = "1";
   };
 

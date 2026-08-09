@@ -5,6 +5,7 @@ let
 in
 {
   modifier = mod;
+  terminal = "ghostty";
   keybindings = lib.mkOptionDefault {
     "${mod}+b" = "exec librewolf";
     "${mod}+m" = "exec obsidian";
