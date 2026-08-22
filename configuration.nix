@@ -92,6 +92,7 @@
     libreoffice
     kdePackages.kate
     zathura
+    burpsuite
   ];
 
   fonts.packages = with pkgs; [ noto-fonts ];
