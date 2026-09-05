@@ -104,6 +104,7 @@
 
   environment.shellAliases = {
     kp = "keepassxc";
+    c = "xclip -selection clipboard";
   };
 
   services.xserver = {
