@@ -21,6 +21,8 @@ in
     XF86AudioRaiseVolume = "exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ .05+";
     XF86AudioLowerVolume = "exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ .05-";
     XF86AudioMute = "exec --no-startup-id wpctl set-mute @DEFAULT_SINK@ toggle";
+    XF86MonBrightnessUp = "exec --no-startup-id brightnessctl set 5%+";
+    XF86MonBrightnessDown = "exec --no-startup-id brightnessctl set 5%-";
   };
   modes.resize = {
     j = "resize grow height 10 px or 10 ppt";

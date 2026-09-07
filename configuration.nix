@@ -6,6 +6,8 @@
 
   hardware.enableRedistributableFirmware = true;
 
+  services.udev.packages = [ pkgs.brightnessctl ];
+
   networking.networkmanager.enable = true;
 
   time.timeZone = "Asia/Riyadh";
@@ -63,6 +65,7 @@
       "networkmanager"
       "wheel"
       "docker"
+      "video"
     ];
     packages = with pkgs; [ ];
   };
@@ -93,6 +96,7 @@
     kdePackages.kate
     zathura
     burpsuite
+    brightnessctl
   ];
 
   fonts.packages = with pkgs; [ noto-fonts ];
