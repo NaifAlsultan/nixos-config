@@ -17,6 +17,7 @@
         modules = [
           ./configuration.nix
           ./hosts/desktop/hardware-configuration.nix
+          ./hosts/desktop/file-sharing.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
