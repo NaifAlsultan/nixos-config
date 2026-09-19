@@ -26,16 +26,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  location = {
-    longitude = 46.72185;
-    latitude = 24.68773;
-  };
-
-  services.xserver.xkb = {
-    layout = "us,ara";
-    options = "grp:caps_toggle";
-  };
-
   services.keyd = {
     enable = true;
     keyboards.default = {
@@ -81,15 +71,12 @@
     librewolf
     git
     ghostty
-    i3
     ntfs3g
     keepassxc
-    xclip
     obsidian
     typst
     dropbox
     vscode
-    redshift
     unzip
     chromium
     libreoffice
@@ -104,19 +91,27 @@
   environment.variables = {
     TERMINAL = "ghostty";
     NIXPKGS_ALLOW_UNFREE = "1";
+    NIXOS_OZONE_WL = "1";
   };
 
   environment.shellAliases = {
     kp = "keepassxc";
-    c = "xclip -selection clipboard";
+    c = "wl-copy";
   };
 
-  services.xserver = {
+  programs.hyprland = {
     enable = true;
-    windowManager.i3.enable = true;
+    withUWSM = false;
+    xwayland.enable = true;
   };
 
-  services.redshift.enable = true;
+  services.greetd = {
+    enable = true;
+    useTextGreeter = true;
+    settings.default_session.command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${config.programs.hyprland.package}/bin/start-hyprland";
+  };
+
+  security.pam.services.hyprlock = { };
 
   nix.settings = {
     experimental-features = [
