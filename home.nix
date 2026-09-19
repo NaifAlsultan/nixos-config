@@ -14,6 +14,16 @@
 
   home.packages = [ pkgs.wl-clipboard ];
 
+  home.pointerCursor = {
+    package = pkgs.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 24;
+    dotIcons.enable = false;
+    gtk.enable = true;
+  };
+
+  gtk.enable = true;
+
   programs.fuzzel = {
     enable = true;
     settings = {

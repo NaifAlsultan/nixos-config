@@ -8,6 +8,12 @@
       scale = 1,
   })
 
+  hl.env("XCURSOR_THEME", "Adwaita")
+  hl.env("XCURSOR_SIZE", "24")
+  hl.on("hyprland.start", function()
+      hl.exec_cmd("hyprctl setcursor Adwaita 24")
+  end)
+
   hl.config({
       general = {
           gaps_in = 0,
@@ -63,14 +69,14 @@
   hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
   hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 
-  hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }))
-  hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
-  hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }))
-  hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
-  hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
-  hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
-  hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
-  hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
+  hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left", group_aware = true }))
+  hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down", group_aware = true }))
+  hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up", group_aware = true }))
+  hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right", group_aware = true }))
+  hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left", group_aware = true }))
+  hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down", group_aware = true }))
+  hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up", group_aware = true }))
+  hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right", group_aware = true }))
 
   hl.bind(mainMod .. " + C", hl.dsp.layout("preselect r"))
   hl.bind(mainMod .. " + V", hl.dsp.layout("preselect d"))
