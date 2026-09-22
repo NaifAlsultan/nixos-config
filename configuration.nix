@@ -39,6 +39,7 @@
   users.users.naif = {
     isNormalUser = true;
     description = "naif";
+    shell = pkgs.nushell;
     subUidRanges = [
       {
         startUid = 100000;
@@ -84,7 +85,6 @@
     zathura
     burpsuite
     brightnessctl
-    inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode
   ];
 
   fonts.packages = with pkgs; [ noto-fonts ];

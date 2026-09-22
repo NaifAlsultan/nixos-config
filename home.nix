@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   wayland.systemd.target = "hyprland-session.target";
@@ -125,6 +125,28 @@
     installBatSyntax = false;
     systemd.enable = false;
     settings = import ./dotfiles/ghostty-settings.nix;
+  };
+
+  programs.nushell = {
+    enable = true;
+    settings = {
+      completions.algorithm = "fuzzy";
+      history = {
+        file_format = "sqlite";
+        isolation = false;
+        max_size = 100000;
+        sync_on_enter = true;
+      };
+    };
+  };
+
+  programs.opencode = {
+    enable = true;
+    package = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
+    settings = {
+      shell = "${pkgs.bash}/bin/bash";
+      permission.external_directory = "allow";
+    };
   };
 
   programs.git = import ./dotfiles/git-config.nix;
