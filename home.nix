@@ -140,6 +140,30 @@
     };
   };
 
+  programs.starship = {
+    enable = true;
+    enableNushellIntegration = true;
+    settings = {
+      add_newline = false;
+      format = "$directory$git_branch\n$character";
+      character = {
+        success_symbol = "[>](bold #53bf97)";
+        error_symbol = "[>](bold #f08778)";
+      };
+      directory = {
+        format = "[ $path ]($style)";
+        style = "bold fg:#1f2430 bg:#60b8d6";
+        truncate_to_repo = false;
+        truncation_length = 0;
+      };
+      git_branch = {
+        format = "[](fg:#60b8d6 bg:#53bf97)[  $branch ]($style)[](fg:#53bf97)";
+        style = "bold fg:#1f2430 bg:#53bf97";
+        symbol = "";
+      };
+    };
+  };
+
   programs.opencode = {
     enable = true;
     package = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;

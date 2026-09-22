@@ -87,7 +87,10 @@
     brightnessctl
   ];
 
-  fonts.packages = with pkgs; [ noto-fonts ];
+  fonts.packages = with pkgs; [
+    nerd-fonts.symbols-only
+    noto-fonts
+  ];
 
   environment.variables = {
     TERMINAL = "ghostty";
