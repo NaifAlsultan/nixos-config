@@ -145,7 +145,7 @@
     enable = true;
     enableNushellIntegration = true;
     settings = {
-      add_newline = false;
+      add_newline = true;
       format = "$directory$git_branch$custom ";
       directory = {
         format = "[ $path ]($style)";
