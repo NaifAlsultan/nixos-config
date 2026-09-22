@@ -146,21 +146,24 @@
     enableNushellIntegration = true;
     settings = {
       add_newline = false;
-      format = "$directory$git_branch $character";
-      character = {
-        success_symbol = "[>](bold #53bf97)";
-        error_symbol = "[>](bold #f08778)";
-      };
+      format = "$directory$git_branch$custom ";
       directory = {
-        format = "[ $path ]($style)[](fg:#60b8d6)";
+        format = "[ $path ]($style)";
         style = "bold fg:#1f2430 bg:#60b8d6";
         truncate_to_repo = false;
         truncation_length = 0;
       };
       git_branch = {
-        format = " [  $branch ]($style)[](fg:#fdcc60)";
+        format = "[](fg:#60b8d6 bg:#fdcc60)[  $branch ]($style)[](fg:#fdcc60)";
         style = "bold fg:#1f2430 bg:#fdcc60";
         symbol = "";
+      };
+      custom.directory_tail = {
+        command = "printf ''";
+        format = "[$output]($style)";
+        shell = [ "${pkgs.bash}/bin/bash" ];
+        style = "fg:#60b8d6";
+        when = "! git rev-parse --is-inside-work-tree >/dev/null 2>&1";
       };
     };
   };
