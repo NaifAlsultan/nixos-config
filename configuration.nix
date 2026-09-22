@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   boot.loader.systemd-boot.enable = true;
@@ -84,6 +84,7 @@
     zathura
     burpsuite
     brightnessctl
+    inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode
   ];
 
   fonts.packages = with pkgs; [ noto-fonts ];
