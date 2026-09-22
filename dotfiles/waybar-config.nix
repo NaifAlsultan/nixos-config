@@ -25,7 +25,7 @@
     };
     network = {
       interval = 2;
-      format-wifi = "W: {essid}";
+      format-wifi = "{essid}";
       format-ethernet = "E: {bandwidthDownBits}";
       format-disconnected = "Net: down";
       tooltip = false;
