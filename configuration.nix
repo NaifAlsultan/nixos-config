@@ -96,7 +96,6 @@
   };
 
   environment.shellAliases = {
-    kp = "keepassxc";
     c = "wl-copy";
   };
 
