@@ -130,6 +130,7 @@
   programs.nushell = {
     enable = true;
     settings = {
+      show_banner = false;
       completions.algorithm = "fuzzy";
       history = {
         file_format = "sqlite";
