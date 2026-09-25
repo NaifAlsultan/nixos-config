@@ -26,6 +26,7 @@
         "read only" = "no";
         "guest ok" = "no";
         "valid users" = "naif";
+        "vfs objects" = "streams_xattr";
         "create mask" = "0600";
         "directory mask" = "0700";
       };
