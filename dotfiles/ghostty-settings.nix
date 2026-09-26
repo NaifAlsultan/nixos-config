@@ -1,7 +1,6 @@
 {
   background = "#1f2430";
   foreground = "#cbccc6";
-  bold-color = "#f28779";
 
   palette = [
     "0=#212733"

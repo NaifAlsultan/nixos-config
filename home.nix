@@ -131,6 +131,7 @@
     enable = true;
     shellAliases.c = "wl-copy";
     settings = {
+      color_config.shape_garbage = "red";
       show_banner = false;
       completions.algorithm = "fuzzy";
       history = {
