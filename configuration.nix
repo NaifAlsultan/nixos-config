@@ -98,10 +98,6 @@
     NIXOS_OZONE_WL = "1";
   };
 
-  environment.shellAliases = {
-    c = "wl-copy";
-  };
-
   programs.hyprland = {
     enable = true;
     withUWSM = false;

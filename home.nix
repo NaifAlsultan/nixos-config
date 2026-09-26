@@ -129,6 +129,7 @@
 
   programs.nushell = {
     enable = true;
+    shellAliases.c = "wl-copy";
     settings = {
       show_banner = false;
       completions.algorithm = "fuzzy";
