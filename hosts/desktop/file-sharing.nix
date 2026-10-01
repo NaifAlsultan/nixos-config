@@ -13,10 +13,8 @@
       global = {
         "server role" = "standalone server";
         "map to guest" = "never";
-        "interfaces" = "lo wlp5s0";
-        "bind interfaces only" = "yes";
         "smb ports" = "445";
-        "hosts allow" = "127.0.0.1 192.168.0.0/24";
+        "hosts allow" = "127.0.0.1 192.168.0.0/24 100.64.0.0/10";
         "hosts deny" = "0.0.0.0/0";
       };
 
@@ -48,4 +46,6 @@
     allowedTCPPorts = [ 445 ];
     allowedUDPPorts = [ 5353 ];
   };
+
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 445 ];
 }
