@@ -81,13 +81,17 @@ router port forwarding.
    under [DNS](https://console.tailscale.com/admin/dns). This one-time tailnet
    consent is required for Serve to obtain HTTPS certificates.
    NixOS manages the private Serve mapping; it starts automatically once the
-   desktop is enrolled and HTTPS is enabled. Get the OpenCode URL with:
+   desktop is enrolled and HTTPS is enabled. If the service requests separate
+   Serve consent, follow the URL in `journalctl -u opencode-serve.service`.
+   Get the OpenCode URL with:
 
    ```bash
-   tailscale serve status
+   tailscale serve status --json
    ```
 
-   Open the HTTPS URL displayed there in iPhone Safari. NixOS runs **Serve**,
+   Look for the HTTPS hostname in the `Foreground.Web` section and open it in
+   iPhone Safari. The plain `tailscale serve status` command may say "No serve
+   config" for this systemd-managed foreground process. NixOS runs **Serve**,
    not Funnel: Funnel would make the site public.
 
 5. In the iPhone **Files** app, go to **Browse → ⋯ → Connect to Server** and
@@ -100,7 +104,7 @@ router port forwarding.
 
 Test both links from the iPhone on cellular with Tailscale connected. Check
 `systemctl status opencode-web.service opencode-serve.service` and
-`tailscale serve status` on the desktop if the browser page is unavailable.
+`tailscale serve status --json` on the desktop if the browser page is unavailable.
 The OpenCode service runs as
 `naif` even when nobody is logged in, and reads its password from
 `/etc/opencode/server-password` via a systemd credential. To change the

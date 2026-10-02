@@ -3,6 +3,7 @@
 let
   opencode = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
   startOpencode = pkgs.writeShellScript "start-opencode-web" ''
+    export PATH="/etc/profiles/per-user/naif/bin:/run/current-system/sw/bin:$PATH"
     export OPENCODE_SERVER_PASSWORD="$(< "$CREDENTIALS_DIRECTORY/opencode-password")"
     if [[ -z "$OPENCODE_SERVER_PASSWORD" ]]; then
       echo "OpenCode server password must not be empty" >&2
