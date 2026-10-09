@@ -1,10 +1,10 @@
-{ pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 let
-  opencode = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
-  startOpencode = pkgs.writeShellScript "start-opencode-web" ''
+  claudeCode = config.home-manager.users.naif.programs.claude-code.finalPackage;
+  startClaude = pkgs.writeShellScript "start-claude-remote-control" ''
     export PATH="/etc/profiles/per-user/naif/bin:/run/current-system/sw/bin:$PATH"
-    exec ${opencode}/bin/opencode web --hostname 127.0.0.1 --port 4096
+    exec ${claudeCode}/bin/claude remote-control --name "Desktop"
   '';
 in
 {
@@ -14,31 +14,20 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "d /home/naif/opencode-workspace 0700 naif users - -"
+    "d /home/naif/claude-workspace 0700 naif users - -"
   ];
 
-  systemd.services.opencode-web = {
-    description = "OpenCode web interface (Tailscale Serve backend)";
+  systemd.services.claude-remote-control = {
+    description = "Claude Code Remote Control";
     wantedBy = [ "multi-user.target" ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    environment.HOME = "/home/naif";
     serviceConfig = {
       Type = "simple";
       User = "naif";
-      WorkingDirectory = "/home/naif/opencode-workspace";
-      ExecStart = startOpencode;
-      Restart = "on-failure";
-      RestartSec = 5;
-    };
-  };
-
-  systemd.services.opencode-serve = {
-    description = "Serve OpenCode over tailnet-only HTTPS";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "tailscaled.service" "opencode-web.service" ];
-    after = [ "tailscaled.service" "opencode-web.service" ];
-    serviceConfig = {
-      Type = "simple";
-      ExecStartPre = "${pkgs.tailscale}/bin/tailscale wait --timeout=30s";
-      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --yes --https=443 http://127.0.0.1:4096";
+      WorkingDirectory = "/home/naif/claude-workspace";
+      ExecStart = startClaude;
       Restart = "always";
       RestartSec = 30;
     };

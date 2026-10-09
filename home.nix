@@ -170,6 +170,27 @@
     };
   };
 
+  programs.claude-code = {
+    enable = true;
+    package = (import inputs.nixpkgs-unstable {
+      system = pkgs.stdenv.hostPlatform.system;
+      config.allowUnfree = true;
+    }).claude-code;
+    settings = {
+      env.CLAUDE_CODE_SHELL = "${pkgs.bash}/bin/bash";
+      permissions = {
+        defaultMode = "default";
+        allow = [
+          "Read(//**)"
+          "Edit(//**)"
+          "Bash"
+          "WebFetch"
+          "WebSearch"
+        ];
+      };
+    };
+  };
+
   programs.opencode = {
     enable = true;
     package = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;

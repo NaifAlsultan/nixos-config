@@ -42,18 +42,17 @@ To verify the flake configuration without applying it:
 nix flake check
 ```
 
-## Remote access (desktop)
+### Claude Code prerequisites (desktop)
 
-OpenCode runs as `naif` in `/home/naif/opencode-workspace`, with tailnet-only
-HTTPS via Tailscale Serve. The SMB share is also accessible over Tailscale.
+After rebuilding, run once as `naif` with an eligible Claude subscription:
 
-### Initial setup
+```bash
+sudo systemctl stop claude-remote-control
+claude auth login
+cd ~/claude-workspace
+claude
+```
 
-1. Apply: `sudo nixos-rebuild switch --flake .#desktop`.
-2. Enroll the desktop with `sudo tailscale up`; sign the iPhone app into the
-   same tailnet.
-3. Enable MagicDNS and HTTPS certificates in the [Tailscale DNS settings](https://console.tailscale.com/admin/dns).
-   If Serve requests additional consent, check `journalctl -u opencode-serve`.
-4. Open the HTTPS hostname under `Foreground.Web` in `tailscale serve status --json`
-   in iPhone Safari. For files, connect in the iPhone Files app to
-   `smb://<desktop-tailscale-ip>` (from `tailscale ip -4`) as Samba user `naif`.
+Accept workspace trust, then exit with `/exit`. Run
+`claude remote-control --name "Desktop"`, accept Remote Control, press Ctrl+C, then run
+`sudo systemctl start claude-remote-control`.
