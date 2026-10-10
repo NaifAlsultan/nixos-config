@@ -189,6 +189,9 @@
         ];
       };
     };
+    context = ''
+      Do not add Co-Authored-By trailers or other attribution lines to git commits or pull requests.
+    '';
   };
 
   programs.opencode = {
