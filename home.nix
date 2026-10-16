@@ -183,10 +183,22 @@
 
   programs.claude-code = {
     enable = true;
-    package = (import inputs.nixpkgs-unstable {
-      system = pkgs.stdenv.hostPlatform.system;
-      config.allowUnfree = true;
-    }).claude-code;
+    package =
+      let
+        unstable = import inputs.nixpkgs-unstable {
+          system = pkgs.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        };
+      in
+      pkgs.symlinkJoin {
+        name = "claude-code";
+        paths = [ unstable.claude-code ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/claude --suffix PATH : ${pkgs.python3}/bin
+        '';
+        inherit (unstable.claude-code) meta version;
+      };
     settings = {
       env.CLAUDE_CODE_SHELL = "${pkgs.bash}/bin/bash";
       permissions = {
