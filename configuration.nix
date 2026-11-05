@@ -131,6 +131,24 @@
       PasswordManagerEnabled = false;
       TranslateEnabled = false;
       DefaultBrowserSettingEnabled = false;
+
+      # Privacy: no telemetry, Google web services, ad tracking, or account sync.
+      MetricsReportingEnabled = false;
+      UrlKeyedAnonymizedDataCollectionEnabled = false;
+      SpellCheckServiceEnabled = false;
+      AlternateErrorPagesEnabled = false;
+      PrivacySandboxAdTopicsEnabled = false;
+      PrivacySandboxSiteEnabledAdsEnabled = false;
+      PrivacySandboxAdMeasurementEnabled = false;
+      PrivacySandboxPromptEnabled = false;
+      BlockThirdPartyCookies = true;
+      NetworkPredictionOptions = 2;
+      BrowserSignin = 0;
+      SyncDisabled = true;
+      GenAiDefaultSettings = 2;
+      BackgroundModeEnabled = false;
+      AutofillCreditCardEnabled = false;
+      PaymentMethodQueryEnabled = false;
     };
   };
 
