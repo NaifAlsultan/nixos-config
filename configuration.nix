@@ -78,7 +78,6 @@
     unzip
     chromium
     libreoffice
-    zathura
     brightnessctl
   ];
 
