@@ -19,7 +19,11 @@
     extraConfig = import ./dotfiles/hyprland-config.nix;
   };
 
-  home.packages = [ pkgs.wl-clipboard ];
+  home.packages = with pkgs; [
+    wl-clipboard
+    obsidian
+    libreoffice
+  ];
 
   home.pointerCursor = {
     package = pkgs.adwaita-icon-theme;
