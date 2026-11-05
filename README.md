@@ -44,15 +44,16 @@ nix flake check
 
 ### Claude Code prerequisites (desktop)
 
-After rebuilding, run once as `naif` with an eligible Claude subscription:
+Remote Control runs as the sandboxed `claude-remote` system user, which can only see
+`/var/lib/claude-remote/workspace`. It has its own Claude login, separate from `naif`'s.
+After rebuilding, set it up once with an eligible Claude subscription:
 
 ```bash
 sudo systemctl stop claude-remote-control
-claude auth login
-cd ~/claude-workspace
-claude
+claude-remote auth login
+claude-remote
 ```
 
 Accept workspace trust, then exit with `/exit`. Run
-`claude remote-control --name "Desktop"`, accept Remote Control, press Ctrl+C, then run
+`claude-remote remote-control --name "Desktop"`, accept Remote Control, press Ctrl+C, then run
 `sudo systemctl start claude-remote-control`.
