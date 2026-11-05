@@ -42,9 +42,8 @@
         install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
         installation_mode = "normal_installed";
       };
-      # Download PDFs instead of opening them in the browser.
-      PDFjs.Enabled = false;
-      Handlers.mimeTypes."application/pdf".action = "saveToDisk";
+      # Open PDF links in the built-in viewer instead of downloading them.
+      DisableBuiltinPDFViewer = false;
     };
     settings = {
       # Already LibreWolf's default; ask where to save every download.
