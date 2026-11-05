@@ -70,7 +70,6 @@
 
   environment.systemPackages = with pkgs; [
     helix
-    librewolf
     git
     ghostty
     ntfs3g
@@ -109,10 +108,30 @@
 
   security.pam.services.hyprlock = { };
 
-  # Passwords live in KeePassXC; Chromium's own store is only weakly encrypted.
   programs.chromium = {
     enable = true;
-    extraOpts.PasswordManagerEnabled = false;
+    defaultSearchProviderEnabled = true;
+    defaultSearchProviderSearchURL = "https://duckduckgo.com/?q={searchTerms}";
+    defaultSearchProviderSuggestURL = "https://duckduckgo.com/ac/?q={searchTerms}&type=list";
+    extraOpts = {
+      # Installed automatically but can be disabled, unlike the `extensions` option.
+      ExtensionSettings =
+        let
+          normal = {
+            installation_mode = "normal_installed";
+            update_url = "https://clients2.google.com/service/update2/crx";
+          };
+        in
+        {
+          "ddkjiahejlhfcafbddmgiahcphecmpfh" = normal; # uBlock Origin Lite
+          "eimadpbcbfnmbkopoojfekhnkhdbieeh" = normal; # Dark Reader
+        };
+      DefaultSearchProviderName = "DuckDuckGo";
+      # Passwords live in KeePassXC; Chromium's own store is only weakly encrypted.
+      PasswordManagerEnabled = false;
+      TranslateEnabled = false;
+      DefaultBrowserSettingEnabled = false;
+    };
   };
 
   nix.settings = {

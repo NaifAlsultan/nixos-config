@@ -23,6 +23,22 @@
   };
 
   gtk.enable = true;
+  # Also sets the portal's color-scheme, which Chromium and LibreWolf follow.
+  gtk.colorScheme = "dark";
+
+  # Uses LibreWolf's own defaults (uBlock Origin, DuckDuckGo, privacy settings)
+  # and adds only what differs. No `profiles`, so the existing profile is kept.
+  programs.librewolf = {
+    enable = true;
+    policies.ExtensionSettings."addon@darkreader.org" = {
+      install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
+      installation_mode = "normal_installed";
+    };
+    settings = {
+      "browser.toolbars.bookmarks.visibility" = "newtab";
+      "browser.translations.automaticallyPopup" = false;
+    };
+  };
 
   programs.fuzzel = {
     enable = true;
