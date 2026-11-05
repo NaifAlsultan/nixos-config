@@ -55,15 +55,16 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "docker"
       "video"
     ];
     packages = with pkgs; [ ];
   };
 
-  virtualisation.docker.enable = true;
   virtualisation.containers.enable = true;
-  virtualisation.podman.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
 
