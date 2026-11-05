@@ -6,6 +6,12 @@
   ...
 }:
 
+let
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+in
 {
   wayland.systemd.target = "hyprland-session.target";
 
@@ -257,22 +263,15 @@
 
   programs.claude-code = {
     enable = true;
-    package =
-      let
-        unstable = import inputs.nixpkgs-unstable {
-          system = pkgs.stdenv.hostPlatform.system;
-          config.allowUnfree = true;
-        };
-      in
-      pkgs.symlinkJoin {
-        name = "claude-code";
-        paths = [ unstable.claude-code ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/claude --suffix PATH : ${pkgs.python3}/bin
-        '';
-        inherit (unstable.claude-code) meta version;
-      };
+    package = pkgs.symlinkJoin {
+      name = "claude-code";
+      paths = [ unstable.claude-code ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/claude --suffix PATH : ${pkgs.python3}/bin
+      '';
+      inherit (unstable.claude-code) meta version;
+    };
     settings = {
       env.CLAUDE_CODE_SHELL = "${pkgs.bash}/bin/bash";
       permissions = {
@@ -306,7 +305,7 @@
 
   programs.opencode = {
     enable = true;
-    package = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
+    package = unstable.opencode;
     settings = {
       shell = "${pkgs.bash}/bin/bash";
       permission.external_directory = "allow";

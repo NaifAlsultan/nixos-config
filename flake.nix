@@ -10,43 +10,41 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations = {
-      desktop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./configuration.nix
+  outputs =
+    { nixpkgs, home-manager, ... }@inputs:
+    let
+      mkHost =
+        hostName: hostModules:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.naif = ./home.nix;
+              networking.hostName = hostName;
+            }
+          ]
+          ++ hostModules;
+        };
+    in
+    {
+      nixosConfigurations = {
+        desktop = mkHost "desktop" [
           ./hosts/desktop/hardware-configuration.nix
           ./hosts/desktop/file-sharing.nix
           ./hosts/desktop/claude-remote-control.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.naif = ./home.nix;
-            networking.hostName = "desktop";
-          }
+        ];
+
+        laptop = mkHost "laptop" [
+          ./hosts/laptop/hardware-configuration.nix
         ];
       };
 
-      laptop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./configuration.nix
-          ./hosts/laptop/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.naif = ./home.nix;
-            networking.hostName = "laptop";
-          }
-        ];
-      };
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
     };
-  };
 }

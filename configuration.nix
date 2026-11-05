@@ -1,7 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
   boot.loader.systemd-boot.enable = true;
+  # /boot is only 512 MB and each generation keeps a kernel there.
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
   hardware.enableRedistributableFirmware = true;
@@ -13,18 +15,6 @@
   time.timeZone = "Asia/Riyadh";
 
   i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
 
   services.keyd = {
     enable = true;
@@ -57,7 +47,6 @@
       "wheel"
       "video"
     ];
-    packages = with pkgs; [ ];
   };
 
   virtualisation.containers.enable = true;
@@ -156,6 +145,16 @@
       "flakes"
     ];
   };
+
+  # Flakes only: no unpinned channels alongside the flake's nixpkgs.
+  nix.channel.enable = false;
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+  nix.optimise.automatic = true;
 
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;

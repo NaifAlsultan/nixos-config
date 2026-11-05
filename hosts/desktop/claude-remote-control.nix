@@ -13,16 +13,24 @@ let
   '';
   # Mounted over /etc/claude-code inside the service only, so Claude cannot
   # loosen its own rules or add hooks and MCP servers.
-  managedSettings = pkgs.writeTextDir "managed-settings.json" (builtins.toJSON {
-    permissions = {
-      allow = [ "Bash" "Read" "Edit" "WebFetch" "WebSearch" ];
-      additionalDirectories = [ "/home/naif/shared" ];
-    };
-    allowManagedPermissionRulesOnly = true;
-    allowManagedHooksOnly = true;
-    allowManagedMcpServersOnly = true;
-    allowedMcpServers = [ ];
-  });
+  managedSettings = pkgs.writeTextDir "managed-settings.json" (
+    builtins.toJSON {
+      permissions = {
+        allow = [
+          "Bash"
+          "Read"
+          "Edit"
+          "WebFetch"
+          "WebSearch"
+        ];
+        additionalDirectories = [ "/home/naif/shared" ];
+      };
+      allowManagedPermissionRulesOnly = true;
+      allowManagedHooksOnly = true;
+      allowManagedMcpServersOnly = true;
+      allowedMcpServers = [ ];
+    }
+  );
 in
 {
   users.users.claude-remote = {
@@ -50,7 +58,10 @@ in
       Type = "simple";
       User = "claude-remote";
       Group = "claude-remote";
-      StateDirectory = [ "claude-remote" "claude-remote/workspace" ];
+      StateDirectory = [
+        "claude-remote"
+        "claude-remote/workspace"
+      ];
       StateDirectoryMode = "0700";
       WorkingDirectory = "${stateDir}/workspace";
       ExecStart = startClaude;
@@ -72,7 +83,10 @@ in
         "100.64.0.0/10"
         "fc00::/7"
       ];
-      IPAddressAllow = [ "100.100.100.100" "fd7a:115c:a1e0::53" ];
+      IPAddressAllow = [
+        "100.100.100.100"
+        "fd7a:115c:a1e0::53"
+      ];
 
       UMask = "0007";
       NoNewPrivileges = true;
@@ -92,7 +106,11 @@ in
       RestrictNamespaces = true;
       RestrictRealtime = true;
       LockPersonality = true;
-      RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
+      RestrictAddressFamilies = [
+        "AF_UNIX"
+        "AF_INET"
+        "AF_INET6"
+      ];
       SystemCallArchitectures = "native";
     };
   };
