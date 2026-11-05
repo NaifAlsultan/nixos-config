@@ -66,9 +66,10 @@ in
           },
       })
 
-      hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("ghostty"))
-      hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("librewolf"))
-      hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("obsidian"))
+      -- Apps run in their own systemd units, not inside Hyprland's.
+      hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("uwsm app -- ghostty"))
+      hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("uwsm app -- librewolf"))
+      hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm app -- obsidian"))
       hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("fuzzel"))
       hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
       hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())

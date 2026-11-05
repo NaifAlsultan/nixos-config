@@ -7,6 +7,8 @@ in
     settings = {
       main = {
         terminal = "ghostty";
+        # Starts each app in its own systemd unit.
+        launch-prefix = "uwsm app --";
         font = "monospace:size=11";
         width = 50;
         lines = 12;
