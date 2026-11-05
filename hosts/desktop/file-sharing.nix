@@ -42,6 +42,11 @@
     };
   };
 
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
+
   networking.firewall.interfaces.wlp5s0 = {
     allowedTCPPorts = [ 445 ];
     allowedUDPPorts = [ 5353 ];

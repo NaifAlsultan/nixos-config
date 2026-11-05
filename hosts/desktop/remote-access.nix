@@ -8,11 +8,6 @@ let
   '';
 in
 {
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
-  };
-
   systemd.tmpfiles.rules = [
     "d /home/naif/claude-workspace 0700 naif users - -"
   ];
