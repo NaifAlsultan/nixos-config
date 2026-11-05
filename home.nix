@@ -160,10 +160,6 @@
         General.ConfigVersion = 2;
         # Acts as the desktop keyring (Secret Service) for other apps.
         FdoSecrets.Enabled = true;
-        Security = {
-          LockDatabaseIdle = true;
-          LockDatabaseIdleSeconds = 600;
-        };
         PasswordGenerator = {
           Length = 20;
           SpecialChars = true;
