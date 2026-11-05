@@ -1,6 +1,10 @@
 {
+  # Members can read and write ~/shared; claude-remote is one of them.
+  users.groups.shared = { };
+  users.users.naif.extraGroups = [ "shared" ];
+
   systemd.tmpfiles.rules = [
-    "d /home/naif/shared 0700 naif users - -"
+    "d /home/naif/shared 2770 naif shared - -"
   ];
 
   services.samba = {
@@ -25,8 +29,9 @@
         "guest ok" = "no";
         "valid users" = "naif";
         "vfs objects" = "streams_xattr";
-        "create mask" = "0600";
-        "directory mask" = "0700";
+        "force group" = "shared";
+        "create mask" = "0660";
+        "directory mask" = "2770";
       };
     };
   };

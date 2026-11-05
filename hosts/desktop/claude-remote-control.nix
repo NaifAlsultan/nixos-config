@@ -11,16 +11,34 @@ let
   claudeRemote = pkgs.writeShellScriptBin "claude-remote" ''
     exec sudo -u claude-remote -H ${pkgs.bash}/bin/bash -c 'cd ~/workspace && exec "$@"' bash ${claudeCode}/bin/claude "$@"
   '';
+  # Mounted over /etc/claude-code inside the service only, so Claude cannot
+  # loosen its own rules or add hooks and MCP servers.
+  managedSettings = pkgs.writeTextDir "managed-settings.json" (builtins.toJSON {
+    permissions = {
+      allow = [ "Bash" "Read" "Edit" "WebFetch" "WebSearch" ];
+      additionalDirectories = [ "/home/naif/shared" ];
+    };
+    allowManagedPermissionRulesOnly = true;
+    allowManagedHooksOnly = true;
+    allowManagedMcpServersOnly = true;
+    allowedMcpServers = [ ];
+  });
 in
 {
   users.users.claude-remote = {
     isSystemUser = true;
     group = "claude-remote";
+    extraGroups = [ "shared" ];
     home = stateDir;
   };
   users.groups.claude-remote = { };
 
   environment.systemPackages = [ claudeRemote ];
+
+  # Empty mount point; host-side Claude sessions see no managed settings.
+  systemd.tmpfiles.rules = [
+    "d /etc/claude-code 0755 root root - -"
+  ];
 
   systemd.services.claude-remote-control = {
     description = "Claude Code Remote Control";
@@ -39,11 +57,26 @@ in
       Restart = "always";
       RestartSec = 30;
 
-      UMask = "0077";
+      BindReadOnlyPaths = [ "${managedSettings}:/etc/claude-code" ];
+      BindPaths = [ "/home/naif/shared" ];
+
+      # Internet only: no LAN or tailnet, except Tailscale's MagicDNS resolver.
+      IPAddressDeny = [
+        "link-local"
+        "multicast"
+        "10.0.0.0/8"
+        "172.16.0.0/12"
+        "192.168.0.0/16"
+        "100.64.0.0/10"
+        "fc00::/7"
+      ];
+      IPAddressAllow = [ "100.100.100.100" "fd7a:115c:a1e0::53" ];
+
+      UMask = "0007";
       NoNewPrivileges = true;
       CapabilityBoundingSet = "";
       ProtectSystem = "strict";
-      ProtectHome = true;
+      ProtectHome = "tmpfs";
       PrivateTmp = true;
       PrivateDevices = true;
       ProtectKernelTunables = true;
