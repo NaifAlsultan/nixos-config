@@ -113,6 +113,12 @@
 
   security.pam.services.hyprlock = { };
 
+  # Passwords live in KeePassXC; Chromium's own store is only weakly encrypted.
+  programs.chromium = {
+    enable = true;
+    extraOpts.PasswordManagerEnabled = false;
+  };
+
   nix.settings = {
     experimental-features = [
       "nix-command"
