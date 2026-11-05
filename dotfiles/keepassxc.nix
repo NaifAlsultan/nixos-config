@@ -5,6 +5,17 @@
   ...
 }:
 
+let
+  theme = import ./theme.nix;
+
+  # Adwaita's padlock, recoloured to the bar's text colour.
+  padlock =
+    name:
+    pkgs.runCommand "${name}.svg" { } ''
+      sed 's/#2e3436/#${theme.foreground}/' \
+        ${pkgs.adwaita-icon-theme}/share/icons/Adwaita/symbolic/status/${name}.svg > $out
+    '';
+in
 {
   # Settings are left unset here: a store-managed keepassxc.ini is read-only
   # and KeePassXC reports an error on every start (home-manager#8257).
@@ -23,6 +34,8 @@
         # Keeps running in the Waybar tray instead of holding a workspace,
         # since closing it would also stop the keyring.
         GUI = {
+          # The icon names the padlocks below replace.
+          TrayIconAppearance = "monochrome-light";
           ShowTrayIcon = true;
           MinimizeToTray = true;
           MinimizeOnClose = true;
@@ -37,6 +50,13 @@
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       run install -Dm644 ${settings} "${config.xdg.configHome}/keepassxc/keepassxc.ini"
     '';
+
+  # Replace KeePassXC's logo in the tray with a closed padlock when the database
+  # is locked and an open one when it is unlocked.
+  xdg.dataFile."icons/hicolor/scalable/apps/keepassxc-monochrome-light-locked.svg".source =
+    padlock "changes-prevent-symbolic";
+  xdg.dataFile."icons/hicolor/scalable/apps/keepassxc-monochrome-light.svg".source =
+    padlock "changes-allow-symbolic";
 
   # Qt looks for a tray only once at startup; if Waybar's isn't registered yet,
   # the icon never appears. Wait for it (up to 30s, then start anyway).

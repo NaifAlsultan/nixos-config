@@ -13,13 +13,13 @@ in
 
       modules-left = [ "hyprland/workspaces" ];
       modules-right = [
+        "tray"
         "network"
         "cpu"
         "memory"
         "disk"
         "pulseaudio"
         "battery"
-        "tray"
         "clock"
       ];
 
