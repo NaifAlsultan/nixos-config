@@ -19,7 +19,7 @@
           ./configuration.nix
           ./hosts/desktop/hardware-configuration.nix
           ./hosts/desktop/file-sharing.nix
-          ./hosts/desktop/remote-access.nix
+          ./hosts/desktop/claude-remote-control.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
