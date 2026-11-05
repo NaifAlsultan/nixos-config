@@ -291,6 +291,19 @@
     '';
   };
 
+  # Claude Code saves changes (e.g. /effort) to settings.json, which fails on a
+  # store link. Keep Home Manager's generated file but install a writable copy,
+  # reset to the declared settings on every switch.
+  home.file."${config.programs.claude-code.configDir}/settings.json".enable = false;
+  home.activation.claudeCodeSettings =
+    let
+      settings = config.home.file."${config.programs.claude-code.configDir}/settings.json".source;
+    in
+    lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      run rm -f "${config.programs.claude-code.configDir}/settings.json"
+      run install -Dm644 ${settings} "${config.programs.claude-code.configDir}/settings.json"
+    '';
+
   programs.opencode = {
     enable = true;
     package = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
