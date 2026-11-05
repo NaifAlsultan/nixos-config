@@ -20,6 +20,14 @@
         General.ConfigVersion = 2;
         # Acts as the desktop keyring (Secret Service) for other apps.
         FdoSecrets.Enabled = true;
+        # Keeps running in the Waybar tray instead of holding a workspace,
+        # since closing it would also stop the keyring.
+        GUI = {
+          ShowTrayIcon = true;
+          MinimizeToTray = true;
+          MinimizeOnClose = true;
+          MinimizeOnStartup = true;
+        };
         PasswordGenerator = {
           Length = 20;
           SpecialChars = true;
