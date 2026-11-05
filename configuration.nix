@@ -130,6 +130,9 @@
       PasswordManagerEnabled = false;
       TranslateEnabled = false;
       DefaultBrowserSettingEnabled = false;
+      # Ask where to save every download, and download PDFs instead of opening them.
+      PromptForDownloadLocation = true;
+      AlwaysOpenPdfExternally = true;
 
       # Privacy: no telemetry, Google web services, ad tracking, or account sync.
       MetricsReportingEnabled = false;

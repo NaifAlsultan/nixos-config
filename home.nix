@@ -37,11 +37,18 @@
   # and adds only what differs. No `profiles`, so the existing profile is kept.
   programs.librewolf = {
     enable = true;
-    policies.ExtensionSettings."addon@darkreader.org" = {
-      install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
-      installation_mode = "normal_installed";
+    policies = {
+      ExtensionSettings."addon@darkreader.org" = {
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
+        installation_mode = "normal_installed";
+      };
+      # Download PDFs instead of opening them in the browser.
+      PDFjs.Enabled = false;
+      Handlers.mimeTypes."application/pdf".action = "saveToDisk";
     };
     settings = {
+      # Already LibreWolf's default; ask where to save every download.
+      "browser.download.useDownloadDir" = false;
       "browser.toolbars.bookmarks.visibility" = "newtab";
       "browser.translations.automaticallyPopup" = false;
     };
