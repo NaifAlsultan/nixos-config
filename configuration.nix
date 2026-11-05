@@ -73,7 +73,6 @@
     git
     ghostty
     ntfs3g
-    keepassxc
     obsidian
     typst
     unzip
