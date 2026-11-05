@@ -1,29 +1,26 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
+{ pkgs, inputs, ... }:
 
 let
+  theme = import ./dotfiles/theme.nix;
   unstable = import inputs.nixpkgs-unstable {
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
 in
 {
-  wayland.systemd.target = "hyprland-session.target";
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = null;
-    portalPackage = null;
-    configType = "lua";
-    systemd.enable = true;
-    systemd.enableXdgAutostart = true;
-    extraConfig = import ./dotfiles/hyprland-config.nix;
-  };
+  imports = [
+    ./dotfiles/claude-code.nix
+    ./dotfiles/fuzzel.nix
+    ./dotfiles/ghostty.nix
+    ./dotfiles/git.nix
+    ./dotfiles/helix.nix
+    ./dotfiles/hyprland.nix
+    ./dotfiles/hyprlock.nix
+    ./dotfiles/keepassxc.nix
+    ./dotfiles/starship.nix
+    ./dotfiles/waybar.nix
+    ./dotfiles/zathura.nix
+  ];
 
   home.packages = with pkgs; [
     wl-clipboard
@@ -63,62 +60,6 @@ in
     };
   };
 
-  programs.fuzzel = {
-    enable = true;
-    settings = {
-      main = {
-        terminal = "ghostty";
-        font = "monospace:size=11";
-        width = 50;
-        lines = 12;
-        horizontal-pad = 16;
-        vertical-pad = 12;
-      };
-      colors = {
-        background = "1f2430ff";
-        text = "cbccc6ff";
-        match = "60b8d6ff";
-        selection = "323844ff";
-        selection-text = "ffffffff";
-        border = "60b8d6ff";
-      };
-      border = {
-        width = 1;
-        radius = 0;
-      };
-    };
-  };
-
-  programs.waybar = import ./dotfiles/waybar-config.nix;
-
-  programs.hyprlock = {
-    enable = true;
-    settings = {
-      general = {
-        disable_loading_bar = true;
-        hide_cursor = true;
-      };
-      background = [
-        {
-          monitor = "";
-          color = "rgb(1f2430)";
-        }
-      ];
-      input-field = [
-        {
-          monitor = "";
-          size = "240, 48";
-          outline_thickness = 1;
-          outer_color = "rgb(60b8d6)";
-          inner_color = "rgb(212733)";
-          font_color = "rgb(cbccc6)";
-          fade_on_empty = false;
-          placeholder_text = "Password";
-        }
-      ];
-    };
-  };
-
   services.hypridle = {
     enable = true;
     settings.listener = [
@@ -136,13 +77,13 @@ in
     enable = true;
     settings = {
       anchor = "top-right";
-      background-color = "#1f2430";
-      border-color = "#60b8d6";
+      background-color = "#${theme.background}";
+      border-color = "#${theme.accent}";
       border-radius = 0;
       border-size = 1;
       default-timeout = 5000;
       font = "monospace 10";
-      text-color = "#cbccc6";
+      text-color = "#${theme.foreground}";
     };
   };
 
@@ -177,47 +118,6 @@ in
   # Replaces the mimeapps.list that apps had written by hand.
   xdg.configFile."mimeapps.list".force = true;
 
-  # Settings are left unset here: a store-managed keepassxc.ini is read-only
-  # and KeePassXC reports an error on every start (home-manager#8257).
-  programs.keepassxc = {
-    enable = true;
-    autostart = true;
-  };
-
-  # So KeePassXC gets a writable copy, reset to these values on every switch.
-  home.activation.keepassxcSettings =
-    let
-      settings = (pkgs.formats.ini { }).generate "keepassxc.ini" {
-        General.ConfigVersion = 2;
-        # Acts as the desktop keyring (Secret Service) for other apps.
-        FdoSecrets.Enabled = true;
-        PasswordGenerator = {
-          Length = 20;
-          SpecialChars = true;
-        };
-      };
-    in
-    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      run install -Dm644 ${settings} "${config.xdg.configHome}/keepassxc/keepassxc.ini"
-    '';
-
-  programs.helix = {
-    enable = true;
-    settings = import ./dotfiles/helix/helix-settings.nix;
-    languages = import ./dotfiles/helix/helix-langs.nix;
-  };
-
-  programs.ghostty = {
-    enable = true;
-    clearDefaultKeybinds = true;
-    enableBashIntegration = false;
-    enableFishIntegration = false;
-    enableZshIntegration = false;
-    installBatSyntax = false;
-    systemd.enable = false;
-    settings = import ./dotfiles/ghostty-settings.nix;
-  };
-
   programs.nushell = {
     enable = true;
     shellAliases.c = "wl-copy";
@@ -234,75 +134,6 @@ in
     };
   };
 
-  programs.starship = {
-    enable = true;
-    enableNushellIntegration = true;
-    settings = {
-      add_newline = true;
-      format = "$directory$git_branch$custom ";
-      directory = {
-        format = "[ $path ]($style)";
-        style = "bold fg:#1f2430 bg:#60b8d6";
-        truncate_to_repo = false;
-        truncation_length = 0;
-      };
-      git_branch = {
-        format = "[](fg:#60b8d6 bg:#fdcc60)[  $branch ]($style)[](fg:#fdcc60)";
-        style = "bold fg:#1f2430 bg:#fdcc60";
-        symbol = "";
-      };
-      custom.directory_tail = {
-        command = "printf ''";
-        format = "[$output]($style)";
-        shell = [ "${pkgs.bash}/bin/bash" ];
-        style = "fg:#60b8d6";
-        when = "! git rev-parse --is-inside-work-tree >/dev/null 2>&1";
-      };
-    };
-  };
-
-  programs.claude-code = {
-    enable = true;
-    package = pkgs.symlinkJoin {
-      name = "claude-code";
-      paths = [ unstable.claude-code ];
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/claude --suffix PATH : ${pkgs.python3}/bin
-      '';
-      inherit (unstable.claude-code) meta version;
-    };
-    settings = {
-      env.CLAUDE_CODE_SHELL = "${pkgs.bash}/bin/bash";
-      permissions = {
-        defaultMode = "default";
-        allow = [
-          "Read(//**)"
-          "Edit(//**)"
-          "Bash"
-          "WebFetch"
-          "WebSearch"
-        ];
-      };
-    };
-    context = ''
-      Do not add Co-Authored-By trailers or other attribution lines to git commits or pull requests.
-    '';
-  };
-
-  # Claude Code saves changes (e.g. /effort) to settings.json, which fails on a
-  # store link. Keep Home Manager's generated file but install a writable copy,
-  # reset to the declared settings on every switch.
-  home.file."${config.programs.claude-code.configDir}/settings.json".enable = false;
-  home.activation.claudeCodeSettings =
-    let
-      settings = config.home.file."${config.programs.claude-code.configDir}/settings.json".source;
-    in
-    lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      run rm -f "${config.programs.claude-code.configDir}/settings.json"
-      run install -Dm644 ${settings} "${config.programs.claude-code.configDir}/settings.json"
-    '';
-
   programs.opencode = {
     enable = true;
     package = unstable.opencode;
@@ -311,10 +142,6 @@ in
       permission.external_directory = "allow";
     };
   };
-
-  programs.git = import ./dotfiles/git-config.nix;
-
-  programs.zathura = import ./dotfiles/zathura-config.nix;
 
   home.stateVersion = "24.11";
 }
