@@ -119,8 +119,6 @@
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 8081 ];
-
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
