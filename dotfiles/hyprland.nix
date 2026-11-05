@@ -1,16 +1,20 @@
+{ config, ... }:
+
 let
   theme = import ./theme.nix;
 in
 {
-  wayland.systemd.target = "hyprland-session.target";
+  # UWSM exports these (including the cursor theme) to the whole session.
+  xdg.configFile."uwsm/env".source =
+    "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
 
   wayland.windowManager.hyprland = {
     enable = true;
     package = null;
     portalPackage = null;
     configType = "lua";
-    systemd.enable = true;
-    systemd.enableXdgAutostart = true;
+    # UWSM starts the session targets and XDG autostart instead.
+    systemd.enable = false;
     extraConfig = ''
       local mainMod = "SUPER"
 
@@ -21,8 +25,6 @@ in
           scale = 1,
       })
 
-      hl.env("XCURSOR_THEME", "Adwaita")
-      hl.env("XCURSOR_SIZE", "24")
       hl.on("hyprland.start", function()
           hl.exec_cmd("hyprctl setcursor Adwaita 24")
       end)
@@ -112,8 +114,7 @@ in
       hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("hyprlock"))
 
       local logoutCommand = [[
-        printf 'No\nYes\n' | fuzzel --dmenu --prompt='Exit Hyprland? ' | grep -qx Yes &&
-          (command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()')
+        printf 'No\nYes\n' | fuzzel --dmenu --prompt='Exit Hyprland? ' | grep -qx Yes && uwsm stop
       ]]
       hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(logoutCommand))
 

@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ ./system/chromium.nix ];
@@ -83,14 +88,15 @@
 
   programs.hyprland = {
     enable = true;
-    withUWSM = false;
+    # Ties the session's services to Hyprland, so logging out stops them.
+    withUWSM = true;
     xwayland.enable = true;
   };
 
   services.greetd = {
     enable = true;
     useTextGreeter = true;
-    settings.default_session.command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${config.programs.hyprland.package}/bin/start-hyprland";
+    settings.default_session.command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd '${lib.getExe config.programs.uwsm.package} start hyprland.desktop'";
   };
 
   security.pam.services.hyprlock = { };
