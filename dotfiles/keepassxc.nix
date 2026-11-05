@@ -37,4 +37,20 @@
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       run install -Dm644 ${settings} "${config.xdg.configHome}/keepassxc/keepassxc.ini"
     '';
+
+  # Qt looks for a tray only once at startup; if Waybar's isn't registered yet,
+  # the icon never appears. Wait for it (up to 30s, then start anyway).
+  xdg.configFile."systemd/user/app-org.keepassxc.KeePassXC@autostart.service.d/wait-for-tray.conf".text =
+    let
+      waitForTray = pkgs.writeShellScript "wait-for-tray" ''
+        for _ in $(${pkgs.coreutils}/bin/seq 150); do
+          ${pkgs.systemd}/bin/busctl --user status org.kde.StatusNotifierWatcher >/dev/null 2>&1 && exit 0
+          ${pkgs.coreutils}/bin/sleep 0.2
+        done
+      '';
+    in
+    ''
+      [Service]
+      ExecStartPre=${waitForTray}
+    '';
 }
