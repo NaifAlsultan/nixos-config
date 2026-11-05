@@ -56,6 +56,8 @@ in
       ExecStart = startClaude;
       Restart = "always";
       RestartSec = 30;
+      # The status screen redraws every second; keep only stderr in the journal.
+      StandardOutput = "null";
 
       BindReadOnlyPaths = [ "${managedSettings}:/etc/claude-code" ];
       BindPaths = [ "/home/naif/shared" ];
