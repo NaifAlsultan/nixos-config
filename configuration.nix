@@ -77,14 +77,10 @@
     keepassxc
     obsidian
     typst
-    dropbox
-    vscode
     unzip
     chromium
     libreoffice
-    kdePackages.kate
     zathura
-    burpsuite
     brightnessctl
   ];
 
