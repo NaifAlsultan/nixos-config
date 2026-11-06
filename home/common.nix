@@ -12,7 +12,6 @@ in
     ../dotfiles/ghostty.nix
     ../dotfiles/git.nix
     ../dotfiles/helix.nix
-    ../dotfiles/keepassxc.nix
     ../dotfiles/starship.nix
     ../dotfiles/zathura.nix
   ];

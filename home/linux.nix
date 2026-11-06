@@ -8,6 +8,7 @@ in
     ../dotfiles/fuzzel.nix
     ../dotfiles/hyprland.nix
     ../dotfiles/hyprlock.nix
+    ../dotfiles/keepassxc.nix
     ../dotfiles/waybar.nix
   ];
 
