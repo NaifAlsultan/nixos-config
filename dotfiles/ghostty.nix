@@ -1,11 +1,18 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 let
   theme = import ./theme.nix;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  # The Mac uses cmd where Linux uses ctrl (or ctrl+shift, since ctrl+c
+  # interrupts the running program).
+  mod = if isDarwin then "cmd" else "ctrl";
+  shiftMod = if isDarwin then "cmd" else "ctrl+shift";
 in
 {
   programs.ghostty = {
     enable = true;
+    # The Linux package doesn't build on macOS; ghostty-bin is the official app.
+    package = if isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
     clearDefaultKeybinds = true;
     enableBashIntegration = false;
     enableFishIntegration = false;
@@ -49,21 +56,23 @@ in
       keybind = [
         "Copy=copy_to_clipboard:plain"
         "Paste=paste_from_clipboard"
-        "ctrl+shift+c=copy_to_clipboard:plain"
-        "ctrl+shift+v=paste_from_clipboard"
+        "${shiftMod}+c=copy_to_clipboard:plain"
+        "${shiftMod}+v=paste_from_clipboard"
         "shift+insert=paste_from_selection"
-        "ctrl+0=reset_font_size"
-        "ctrl+equal=increase_font_size:1"
-        "ctrl+plus=increase_font_size:1"
-        "ctrl+minus=decrease_font_size:1"
-        "ctrl+numpad_add=increase_font_size:1"
-        "ctrl+numpad_subtract=decrease_font_size:1"
+        "${mod}+0=reset_font_size"
+        "${mod}+equal=increase_font_size:1"
+        "${mod}+plus=increase_font_size:1"
+        "${mod}+minus=decrease_font_size:1"
+        "${mod}+numpad_add=increase_font_size:1"
+        "${mod}+numpad_subtract=decrease_font_size:1"
         "shift+page_up=scroll_page_up"
         "shift+page_down=scroll_page_down"
         "shift+home=scroll_to_top"
         "shift+end=scroll_to_bottom"
-        "ctrl+shift+f=start_search"
+        "${shiftMod}+f=start_search"
         "performable:escape=end_search"
+        # Opens in the current terminal's folder, which Nushell reports.
+        "${shiftMod}+n=new_window"
       ];
     };
   };
