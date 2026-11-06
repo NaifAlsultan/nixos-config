@@ -16,7 +16,6 @@ in
   home.packages = with pkgs; [
     wl-clipboard
     libreoffice
-    brightnessctl
   ];
 
   # Uses LibreWolf's own defaults (uBlock Origin, DuckDuckGo, privacy settings)

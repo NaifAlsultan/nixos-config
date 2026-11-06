@@ -6,7 +6,10 @@
 }:
 
 {
-  imports = [ ./system/chromium.nix ];
+  imports = [
+    ./system/brightness.nix
+    ./system/chromium.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   # /boot is only 512 MB and each generation keeps a kernel there.
@@ -14,8 +17,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   hardware.enableRedistributableFirmware = true;
-
-  services.udev.packages = [ pkgs.brightnessctl ];
 
   networking.networkmanager.enable = true;
 
@@ -52,7 +53,6 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "video"
     ];
   };
 
