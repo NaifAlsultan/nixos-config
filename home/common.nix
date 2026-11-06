@@ -15,6 +15,9 @@ in
     ../dotfiles/starship.nix
   ];
 
+  # Allows unfree packages in impure commands, e.g. `nix run --impure nixpkgs#...`.
+  home.sessionVariables.NIXPKGS_ALLOW_UNFREE = "1";
+
   home.packages = with pkgs; [
     obsidian
     typst

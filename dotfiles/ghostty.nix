@@ -9,6 +9,8 @@ let
   shiftMod = if isDarwin then "cmd" else "ctrl+shift";
 in
 {
+  home.sessionVariables.TERMINAL = "ghostty";
+
   programs.ghostty = {
     enable = true;
     # The Linux package doesn't build on macOS; ghostty-bin is the official app.

@@ -64,11 +64,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.variables = {
-    TERMINAL = "ghostty";
-    NIXPKGS_ALLOW_UNFREE = "1";
-    NIXOS_OZONE_WL = "1";
-  };
+  environment.variables.NIXOS_OZONE_WL = "1";
 
   programs.hyprland = {
     enable = true;
