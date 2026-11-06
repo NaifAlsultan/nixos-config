@@ -68,7 +68,6 @@
     # Root and the claude-remote user see only these, not Home Manager's packages.
     helix
     git
-    ntfs3g
     typst
     unzip
     chromium
