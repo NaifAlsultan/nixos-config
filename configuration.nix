@@ -65,7 +65,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    # Root and the claude-remote user see only these, not Home Manager's packages.
+    # Root sees only these, not Home Manager's packages.
     helix
     git
     typst

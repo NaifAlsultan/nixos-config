@@ -1,5 +1,5 @@
 {
-  # Members can read and write ~/shared; claude-remote is one of them.
+  # Members can read and write ~/shared.
   users.groups.shared = { };
   users.users.naif.extraGroups = [ "shared" ];
 
