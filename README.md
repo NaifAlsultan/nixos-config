@@ -8,7 +8,7 @@ Unified NixOS and Home Manager configuration for multiple machines using Flakes.
 - `configuration.nix`: Shared system configuration.
 - `home.nix`: Shared Home Manager configuration.
 - `hosts/`: Machine-specific configurations.
-  - `desktop/`: Hardware config, Samba file sharing over LAN and Tailscale, and the Claude Code remote control service.
+  - `desktop/`: Hardware config, and Samba file sharing over LAN and Tailscale.
   - `laptop/`: Hardware config for the laptop.
 - `system/`: System modules imported by `configuration.nix` (Chromium policies).
 - `dotfiles/`: Home Manager modules, one per program (Hyprland, Waybar, Helix, etc.), imported by `home.nix`.
@@ -43,19 +43,3 @@ To verify the flake configuration without applying it:
 ```bash
 nix flake check
 ```
-
-### Claude Code prerequisites (desktop)
-
-Remote Control runs as the sandboxed `claude-remote` system user, which can only see
-`/var/lib/claude-remote/workspace`. It has its own Claude login, separate from `naif`'s.
-After rebuilding, set it up once with an eligible Claude subscription:
-
-```bash
-sudo systemctl stop claude-remote-control
-claude-remote auth login
-claude-remote
-```
-
-Accept workspace trust, then exit with `/exit`. Run
-`claude-remote remote-control --name "Desktop"`, accept Remote Control, press Ctrl+C, then run
-`sudo systemctl start claude-remote-control`.
