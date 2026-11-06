@@ -12,6 +12,8 @@
     enable = true;
     autostart = true;
   };
+  # Required by `autostart`; KeePassXC is the only autostart entry.
+  xdg.autostart.enable = true;
 
   # So KeePassXC gets a writable copy, reset to these values on every switch.
   home.activation.keepassxcSettings =
