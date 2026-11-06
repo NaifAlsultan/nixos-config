@@ -1,11 +1,5 @@
-{ pkgs, inputs, ... }:
+{ pkgs, unstable, ... }:
 
-let
-  unstable = import inputs.nixpkgs-unstable {
-    system = pkgs.stdenv.hostPlatform.system;
-    config.allowUnfree = true;
-  };
-in
 {
   programs.opencode = {
     enable = true;

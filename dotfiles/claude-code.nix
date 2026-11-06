@@ -2,16 +2,10 @@
   config,
   lib,
   pkgs,
-  inputs,
+  unstable,
   ...
 }:
 
-let
-  unstable = import inputs.nixpkgs-unstable {
-    system = pkgs.stdenv.hostPlatform.system;
-    config.allowUnfree = true;
-  };
-in
 {
   programs.claude-code = {
     enable = true;

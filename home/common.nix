@@ -1,6 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
+  # Lets any module take `unstable` as an argument, for packages that need
+  # newer versions than the stable channel.
+  _module.args.unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+
   imports = [
     ../dotfiles/claude-code.nix
     ../dotfiles/ghostty.nix
