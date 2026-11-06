@@ -1,6 +1,8 @@
 {
   programs.helix = {
     enable = true;
+    # Sets EDITOR, so sudoedit and other tools open Helix instead of nano.
+    defaultEditor = true;
 
     settings = {
       theme = "ayu_mirage";
