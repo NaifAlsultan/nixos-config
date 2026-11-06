@@ -1,4 +1,9 @@
+{ pkgs, ... }:
+
 {
+  # In system, not Home Manager: Chromium reads its policies only from /etc.
+  environment.systemPackages = [ pkgs.chromium ];
+
   programs.chromium = {
     enable = true;
     defaultSearchProviderEnabled = true;

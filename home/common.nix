@@ -17,6 +17,10 @@ in
 
   home.packages = with pkgs; [
     obsidian
+    typst
+    unzip
+    nerd-fonts.symbols-only
+    noto-fonts
   ];
 
   programs.nushell = {

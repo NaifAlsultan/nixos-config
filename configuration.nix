@@ -64,21 +64,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    # Root sees only these, not Home Manager's packages.
-    helix
-    git
-    typst
-    unzip
-    chromium
-    brightnessctl
-  ];
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.symbols-only
-    noto-fonts
-  ];
-
   environment.variables = {
     TERMINAL = "ghostty";
     NIXPKGS_ALLOW_UNFREE = "1";

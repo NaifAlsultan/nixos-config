@@ -12,7 +12,7 @@ Unified NixOS and Home Manager configuration for multiple machines using Flakes.
 - `hosts/`: Machine-specific configurations.
   - `desktop/`: Hardware config, and Samba file sharing over LAN and Tailscale.
   - `laptop/`: Hardware config for the laptop.
-- `system/`: System modules imported by `configuration.nix` (Chromium policies).
+- `system/`: System modules imported by `configuration.nix` (Chromium and its policies).
 - `dotfiles/`: Home Manager modules, one per program (Hyprland, Waybar, Helix, etc.), imported by `home/common.nix` or `home/linux.nix`.
   - `theme.nix`: The shared colour palette every themed program reads.
 
