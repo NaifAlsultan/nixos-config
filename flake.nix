@@ -25,7 +25,13 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.users.naif = ./home.nix;
+              home-manager.users.naif = {
+                imports = [
+                  ./home/common.nix
+                  ./home/linux.nix
+                ];
+                home.stateVersion = "24.11";
+              };
               networking.hostName = hostName;
             }
           ]
