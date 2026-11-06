@@ -17,7 +17,11 @@
   home.activation.keepassxcSettings =
     let
       settings = (pkgs.formats.ini { }).generate "keepassxc.ini" {
-        General.ConfigVersion = 2;
+        General = {
+          ConfigVersion = 2;
+          # Keeps the previous version as Database.old.kdbx, to undo a bad merge.
+          BackupBeforeSave = true;
+        };
         # Acts as the desktop keyring (Secret Service) for other apps.
         FdoSecrets.Enabled = true;
         # Keeps running in the Waybar tray instead of holding a workspace,
