@@ -1,10 +1,6 @@
 {
-  # Members can read and write ~/shared.
-  users.groups.shared = { };
-  users.users.naif.extraGroups = [ "shared" ];
-
   systemd.tmpfiles.rules = [
-    "d /home/naif/shared 2770 naif shared - -"
+    "d /home/naif/shared 0700 naif users - -"
   ];
 
   services.samba = {
@@ -29,9 +25,8 @@
         "guest ok" = "no";
         "valid users" = "naif";
         "vfs objects" = "streams_xattr";
-        "force group" = "shared";
-        "create mask" = "0660";
-        "directory mask" = "2770";
+        "create mask" = "0600";
+        "directory mask" = "0700";
       };
     };
   };
