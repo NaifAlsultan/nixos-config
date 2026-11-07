@@ -16,7 +16,11 @@
       '';
       inherit (unstable.opencode) meta version;
     };
-    extraPackages = [ pkgs.python3 ];
+    extraPackages = [
+      pkgs.python3
+      # pdftoppm and pdftotext, for rendering and searching book pages.
+      pkgs.poppler-utils
+    ];
     settings = {
       shell = "${pkgs.bash}/bin/bash";
       share = "disabled";
