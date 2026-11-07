@@ -12,7 +12,10 @@ let
   cliSettings = (pkgs.formats.json { }).generate "cli.json" {
     "$schema" = "https://opencode.ai/v2/cli.json";
     # Show images from tool results (e.g. rendered book figures) in the transcript.
-    session.image_preview = true;
+    session = {
+      image_preview = true;
+      sidebar = "hide";
+    };
   };
 in
 {
