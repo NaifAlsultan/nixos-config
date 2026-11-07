@@ -2,7 +2,9 @@
 
 {
   # In system, not Home Manager: Chromium reads its policies only from /etc.
-  environment.systemPackages = [ pkgs.chromium ];
+  environment.systemPackages = [
+    (pkgs.chromium.override { commandLineArgs = "--password-store=basic"; })
+  ];
 
   programs.chromium = {
     enable = true;

@@ -13,7 +13,6 @@ in
 
       modules-left = [ "hyprland/workspaces" ];
       modules-right = [
-        "tray"
         "network"
         "cpu"
         "memory"
@@ -55,7 +54,6 @@ in
         interval = 30;
         format = "Bat {capacity}%";
       };
-      tray.spacing = 8;
       clock = {
         interval = 30;
         format = "{:%Y-%m-%d %I:%M %p}";
@@ -102,7 +100,6 @@ in
       #disk,
       #pulseaudio,
       #battery,
-      #tray,
       #clock {
         padding: 0 7px;
       }
