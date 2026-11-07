@@ -19,7 +19,10 @@
       inherit (unstable.claude-code) meta version;
     };
     settings = {
-      env.CLAUDE_CODE_SHELL = "${pkgs.bash}/bin/bash";
+      env = {
+        CLAUDE_CODE_SHELL = "${pkgs.bash}/bin/bash";
+        CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
+      };
       permissions = {
         defaultMode = "default";
         allow = [
