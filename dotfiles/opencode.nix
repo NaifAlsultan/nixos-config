@@ -64,6 +64,10 @@ in
     '';
   };
 
+  # Web search through Claude Code's WebSearch tool on Haiku, using the Claude
+  # subscription. OpenCode loads plugin files from this folder.
+  xdg.configFile."opencode/plugins/claude-websearch.ts".source = ./opencode-claude-websearch.ts;
+
   # OpenCode saves changes from its settings dialog to cli.json, which fails on
   # a store link. Install a writable copy, reset to the declared settings on
   # every switch.
