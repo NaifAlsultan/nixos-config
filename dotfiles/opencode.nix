@@ -16,6 +16,7 @@
       '';
       inherit (unstable.opencode) meta version;
     };
+    extraPackages = [ pkgs.python3 ];
     settings = {
       shell = "${pkgs.bash}/bin/bash";
       share = "disabled";
