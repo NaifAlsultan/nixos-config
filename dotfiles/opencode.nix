@@ -18,7 +18,7 @@
     };
     settings = {
       shell = "${pkgs.bash}/bin/bash";
-      permission.external_directory = "allow";
+      share = "disabled";
     };
   };
 }
