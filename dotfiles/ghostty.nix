@@ -49,7 +49,6 @@ in
       link-previews = false;
       resize-overlay = "never";
       scrollbar = "never";
-      image-storage-limit = 0;
 
       font-feature = "-calt,-liga,-dlig";
       window-padding-x = 0;
