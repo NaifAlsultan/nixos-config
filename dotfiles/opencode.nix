@@ -1,5 +1,20 @@
-{ pkgs, unstable, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  unstable,
+  ...
+}:
 
+let
+  # Terminal client settings. Home Manager's `tui` option writes tui.json,
+  # which OpenCode 2 no longer reads.
+  cliSettings = (pkgs.formats.json { }).generate "cli.json" {
+    "$schema" = "https://opencode.ai/v2/cli.json";
+    # Show images from tool results (e.g. rendered book figures) in the transcript.
+    session.image_preview = true;
+  };
+in
 {
   programs.opencode = {
     enable = true;
@@ -45,4 +60,12 @@
       When the current project has instructions, follow them. They define how to work in that project.
     '';
   };
+
+  # OpenCode saves changes from its settings dialog to cli.json, which fails on
+  # a store link. Install a writable copy, reset to the declared settings on
+  # every switch.
+  home.activation.opencodeCliSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    run rm -f "${config.xdg.configHome}/opencode/cli.json"
+    run install -Dm644 ${cliSettings} "${config.xdg.configHome}/opencode/cli.json"
+  '';
 }
