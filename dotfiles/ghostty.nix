@@ -53,6 +53,8 @@ in
       font-feature = "-calt,-liga,-dlig";
       window-padding-x = 0;
       window-padding-y = 0;
+      window-padding-color = "extend";
+      window-padding-balance = true;
 
       keybind = [
         "Copy=copy_to_clipboard:plain"
