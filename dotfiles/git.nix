@@ -16,6 +16,8 @@
         editor = "hx";
       };
       init.defaultBranch = "main";
+      # A bare repo planted in ~/remote could run commands through its config.
+      safe.bareRepository = "explicit";
     };
   };
 }

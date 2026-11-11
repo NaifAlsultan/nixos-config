@@ -1,6 +1,7 @@
 {
   systemd.tmpfiles.rules = [
-    "d /home/naif/shared 0700 naif users - -"
+    # Group bits are the ACL mask for opencode-remote.
+    "d /home/naif/shared 0770 naif users - -"
   ];
 
   services.samba = {
@@ -25,8 +26,9 @@
         "guest ok" = "no";
         "valid users" = "naif";
         "vfs objects" = "streams_xattr";
-        "create mask" = "0600";
-        "directory mask" = "0700";
+        # Group bits are the ACL mask for opencode-remote.
+        "create mask" = "0660";
+        "directory mask" = "0770";
       };
     };
   };

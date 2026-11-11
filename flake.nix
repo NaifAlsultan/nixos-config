@@ -43,6 +43,7 @@
         desktop = mkHost "desktop" [
           ./hosts/desktop/hardware-configuration.nix
           ./hosts/desktop/file-sharing.nix
+          ./hosts/desktop/opencode-remote.nix
         ];
 
         laptop = mkHost "laptop" [
