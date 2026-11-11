@@ -10,6 +10,7 @@
 
   imports = [
     ../dotfiles/claude-code.nix
+    ../dotfiles/direnv.nix
     ../dotfiles/ghostty.nix
     ../dotfiles/git.nix
     ../dotfiles/helix.nix
