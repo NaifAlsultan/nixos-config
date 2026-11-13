@@ -62,15 +62,39 @@ in
 
       When the current project has instructions, follow them. They define how to work in that project.
     '';
-    # /ask <question>: a normal, recorded turn that answers without acting.
     commands.ask = ''
       ---
-      description: Ask a question without the agent taking action
+      description: Ask without taking action
       ---
 
       $ARGUMENTS
 
       This is only a question, not a request to act. Answer it, and use tools as needed to investigate, such as reading files, searching, or running commands that only inspect. Do not edit or create files, run commands that change state, commit, install anything, or take other actions. If a change would help, describe it and wait for me to ask for it.
+    '';
+    commands.handoff = ''
+      ---
+      description: Hand off to a fresh agent
+      ---
+
+      Write a handoff prompt so an agent with fresh context can carry out the work from this session. I'll paste it as the first message of a new session. That agent has none of this conversation, so the prompt must stand on its own. Write it to that agent.
+
+      Focus for the next session, if I gave one: $ARGUMENTS
+
+      Get this session's ID by running `echo "$OPENCODE_SESSION_ID"` with your shell tool. Use tools as needed, such as to check files or confirm details, but don't change anything or start on the work.
+
+      Your last reply must be the prompt and nothing else, because I copy the whole reply with /copy. Don't put an introduction before it, such as "Here is the handoff prompt:", a closing remark after it, or a code fence around it.
+
+      Include:
+      - The goal, and the current state of the work.
+      - The plan, as concrete steps.
+      - The decisions we made, each with the reason and the alternatives we rejected. A fresh agent loses the why first, so keep it.
+      - Constraints and preferences I stated.
+      - Open questions and known risks.
+      - The relevant files, commands, and links.
+      - What was verified and what was only assumed. Label anything you didn't check, because the next agent will trust the prompt.
+      - A section on the previous session. Give its ID and project directory, and say that the full transcript can be exported with `opencode session export <ID> > /tmp/<ID>.json` and searched there (user messages are in `.text`, assistant turns in `.content`) for the detailed reasoning behind a decision. Say that the agent shouldn't read the whole export into context, and that this prompt wins where it conflicts with an earlier turn in the transcript.
+
+      Reference existing artifacts such as specs, plans, issues, commits, and diffs by path or URL instead of copying them. Keep the prompt as short as completeness allows. Redact secrets such as API keys, tokens, and passwords.
     '';
   };
 
