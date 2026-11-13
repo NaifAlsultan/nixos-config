@@ -62,6 +62,16 @@ in
 
       When the current project has instructions, follow them. They define how to work in that project.
     '';
+    # /ask <question>: a normal, recorded turn that answers without acting.
+    commands.ask = ''
+      ---
+      description: Ask a question without the agent taking action
+      ---
+
+      $ARGUMENTS
+
+      This is only a question, not a request to act. Answer it, and use tools as needed to investigate, such as reading files, searching, or running commands that only inspect. Do not edit or create files, run commands that change state, commit, install anything, or take other actions. If a change would help, describe it and wait for me to ask for it.
+    '';
   };
 
   # Web search through Claude Code's WebSearch tool on Haiku, using the Claude
