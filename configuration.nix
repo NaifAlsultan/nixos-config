@@ -24,16 +24,6 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  services.keyd = {
-    enable = true;
-    keyboards.default = {
-      settings.main = {
-        capslock = "esc";
-        rightcontrol = "capslock";
-      };
-    };
-  };
-
   users.users.naif = {
     isNormalUser = true;
     description = "naif";
