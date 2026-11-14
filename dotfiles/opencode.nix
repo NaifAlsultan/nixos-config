@@ -36,6 +36,7 @@ in
     };
     extraPackages = [
       pkgs.python3
+      pkgs.jq
       # pdftoppm and pdftotext, for rendering and searching book pages.
       pkgs.poppler-utils
     ];
@@ -96,6 +97,9 @@ in
 
       Reference existing artifacts such as specs, plans, issues, commits, and diffs by path or URL instead of copying them. Keep the prompt as short as completeness allows. Redact secrets such as API keys, tokens, and passwords.
     '';
+    # Finding and reading past sessions through the opencode CLI, instead of
+    # each agent working it out (or querying the database).
+    skills.opencode-sessions = ./opencode-sessions;
   };
 
   # Web search through Claude Code's WebSearch tool on Haiku, using the Claude

@@ -14,7 +14,12 @@
       paths = [ unstable.claude-code ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
-        wrapProgram $out/bin/claude --suffix PATH : ${pkgs.python3}/bin
+        wrapProgram $out/bin/claude --suffix PATH : ${
+          lib.makeBinPath [
+            pkgs.python3
+            pkgs.jq
+          ]
+        }
       '';
       inherit (unstable.claude-code) meta version;
     };
