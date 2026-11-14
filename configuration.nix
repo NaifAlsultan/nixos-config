@@ -7,6 +7,7 @@
 
 {
   imports = [
+    ./system/agent-browser.nix
     ./system/brightness.nix
     ./system/chromium.nix
   ];

@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "agent-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794655637,
+        "narHash": "sha256-z9dLf859ST+Y8VBuBS/5ZZq/i2M0k4YtwhAZwOgrd0s=",
+        "owner": "NaifAlsultan",
+        "repo": "agent-browser",
+        "rev": "3b5b19328ce821693115215ef664e71321d3da90",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NaifAlsultan",
+        "repo": "agent-browser",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -55,6 +75,7 @@
     },
     "root": {
       "inputs": {
+        "agent-browser": "agent-browser",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable"

@@ -159,6 +159,9 @@ in
     environment = {
       HOME = stateDir;
       GIT_CONFIG_GLOBAL = gitConfig;
+      # Chrome's sandbox needs namespaces, which would also be open to the agent's shell. Without it, an exploited
+      # renderer gets no more than the agent already has, inside this unit.
+      AGENT_BROWSER_CHROME_ARGS = "--no-sandbox";
     };
     serviceConfig = {
       Type = "simple";
@@ -199,7 +202,11 @@ in
       ProtectSystem = "strict";
       ProtectHome = "tmpfs";
       PrivateTmp = true;
-      PrivateDevices = true;
+      # The GPU for agent-browser's WebGL: its software fallback is a bot signal. Otherwise as PrivateDevices.
+      PrivateDevices = false;
+      DevicePolicy = "closed";
+      DeviceAllow = [ "/dev/dri/renderD128 rw" ];
+      SystemCallFilter = [ "~@raw-io" ];
       ProtectKernelTunables = true;
       ProtectKernelModules = true;
       ProtectKernelLogs = true;
