@@ -16,6 +16,7 @@ let
       image_preview = true;
       sidebar = "hide";
     };
+    tabs.mode = "off";
   };
 in
 {
