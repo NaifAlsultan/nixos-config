@@ -162,6 +162,8 @@ in
       # Chrome's sandbox needs namespaces, which would also be open to the agent's shell. Without it, an exploited
       # renderer gets no more than the agent already has, inside this unit.
       AGENT_BROWSER_CHROME_ARGS = "--no-sandbox";
+      # bubblewrap needs namespaces too, so agent-browser's own sandbox is off here: this unit is its sandbox.
+      AGENT_BROWSER_SANDBOX = "off";
     };
     serviceConfig = {
       Type = "simple";
