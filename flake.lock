@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794686902,
-        "narHash": "sha256-3Sj7TpCUY0lRrLUFg6X6vHmrFEfFVj7iR9s5WkAjRC4=",
+        "lastModified": 1794860289,
+        "narHash": "sha256-6cfnKUl/y5e5gZa05eYDRhH2Lue2SbXwORdkzL4nP4U=",
         "owner": "NaifAlsultan",
         "repo": "agent-browser",
-        "rev": "775adba1d8b34b7642d922e726c2df98cbb425a7",
+        "rev": "d7f22c531083ae8dacecac3a465fe36e7a231ca0",
         "type": "github"
       },
       "original": {
