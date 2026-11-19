@@ -15,8 +15,8 @@
         "server role" = "standalone server";
         "map to guest" = "never";
         "smb ports" = "445";
-        "hosts allow" = "127.0.0.1 192.168.0.0/24 100.64.0.0/10";
-        "hosts deny" = "0.0.0.0/0";
+        "hosts allow" = "127.0.0.1 ::1 100.64.0.0/10 fd7a:115c:a1e0::/48";
+        "hosts deny" = "ALL";
       };
 
       shared = {
@@ -33,25 +33,9 @@
     };
   };
 
-  services.avahi = {
-    enable = true;
-    openFirewall = false;
-    allowInterfaces = [ "wlp5s0" ];
-    ipv6 = false;
-    publish = {
-      enable = true;
-      addresses = true;
-    };
-  };
-
   services.tailscale = {
     enable = true;
     openFirewall = true;
-  };
-
-  networking.firewall.interfaces.wlp5s0 = {
-    allowedTCPPorts = [ 445 ];
-    allowedUDPPorts = [ 5353 ];
   };
 
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 445 ];
