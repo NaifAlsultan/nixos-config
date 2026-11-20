@@ -11,7 +11,7 @@ Unified NixOS and Home Manager configuration for multiple machines using Flakes.
   - `linux.nix`: The Linux desktop (Hyprland, Waybar, GTK, default apps).
 - `hosts/`: Machine-specific configurations.
   - `desktop/`: Hardware config, Samba file sharing over Tailscale, and a sandboxed OpenCode server for the iPhone.
-  - `laptop/`: Hardware config for the laptop.
+  - `laptop/`: Hardware config, and the desktop's `~/shared` mounted over Tailscale.
 - `system/`: System modules imported by `configuration.nix` (Chromium and its policies, [agent-browser](https://github.com/NaifAlsultan/agent-browser) for OpenCode, brightness control).
 - `dotfiles/`: Home Manager modules, one per program (Hyprland, Waybar, Helix, etc.), imported by `home/common.nix` or `home/linux.nix`.
   - `theme.nix`: The shared colour palette every themed program reads.
