@@ -56,6 +56,7 @@
           ./hosts/laptop/file-sharing.nix
           ./hosts/laptop/idle-lock.nix
           ./hosts/laptop/power.nix
+          ./hosts/laptop/firmware.nix
         ];
       };
 
