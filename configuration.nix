@@ -17,6 +17,15 @@
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  system.preSwitchChecks.matchingHost = ''
+    current=$(< /proc/sys/kernel/hostname)
+    if [[ "$current" != ${lib.escapeShellArg config.networking.hostName} && "$current" != nixos ]]; then
+      echo "This is '$current', but the configuration is for '${config.networking.hostName}'." >&2
+      echo "Run: sudo nixos-rebuild switch --flake ." >&2
+      exit 1
+    fi
+  '';
+
   hardware.enableRedistributableFirmware = true;
 
   networking.networkmanager.enable = true;

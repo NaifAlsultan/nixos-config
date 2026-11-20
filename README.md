@@ -20,16 +20,9 @@ Unified NixOS and Home Manager configuration for multiple machines using Flakes.
 
 ### Apply Configuration
 
-To apply the configuration for a specific machine, run the following command from this directory:
-
-**For Desktop:**
+From this directory, on either machine:
 ```bash
-sudo nixos-rebuild switch --flake .#desktop
-```
-
-**For Laptop:**
-```bash
-sudo nixos-rebuild switch --flake .#laptop
+sudo nixos-rebuild switch --flake .
 ```
 
 ### Update Dependencies
@@ -53,7 +46,7 @@ can access `~/remote` and `~/shared`, nothing else in the home directory.
 
 ### Setup
 
-1. Apply the configuration: `sudo nixos-rebuild switch --flake .#desktop`.
+1. Apply the configuration on the desktop: `sudo nixos-rebuild switch --flake .`.
    Tailscale needs MagicDNS and HTTPS certificates enabled in the
    [admin console](https://login.tailscale.com/admin/dns).
 2. Sign the server in to Claude:
