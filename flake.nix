@@ -48,6 +48,7 @@
           ./hosts/desktop/hardware-configuration.nix
           ./hosts/desktop/file-sharing.nix
           ./hosts/desktop/opencode-remote.nix
+          ./hosts/desktop/no-sleep.nix
         ];
 
         laptop = mkHost "laptop" [
