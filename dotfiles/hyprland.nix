@@ -112,7 +112,7 @@ in
 
       hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("hyprctl reload"))
       hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
-      hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("hyprlock"))
+      hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 
       local logoutCommand = [[
         printf 'No\nYes\n' | fuzzel --dmenu --prompt='Exit Hyprland? ' | grep -qx Yes && uwsm stop

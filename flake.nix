@@ -54,6 +54,7 @@
         laptop = mkHost "laptop" [
           ./hosts/laptop/hardware-configuration.nix
           ./hosts/laptop/file-sharing.nix
+          ./hosts/laptop/idle-lock.nix
         ];
       };
 
